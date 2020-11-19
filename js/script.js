@@ -1,8 +1,9 @@
 let url = 'https://www.potterapi.com/v1/';
-let houseUrl = 'http://hp-api.herokuapp.com/api/characters/house/';
+let houseUrl = 'http://hp-api.herokuapp.com/api/characters/house/'; // + gryffindor
 let endPoint = '';
 let dataSet;
 let house = '';
+let classmates = [];
 let spell = '';
 let patronus = '';
 let deatheater = false;
@@ -26,7 +27,11 @@ document.getElementById('sorting-hat-image').addEventListener('click', function(
 })
 
 document.getElementById('spells-image').addEventListener('click', function() {
-    endPoint = 'spells';
-    doMagic();
-    spell = dataSet;
+    classmates = [];
+    fetch(houseUrl + house)
+    .then(response => response.json())
+    .then(data => {
+        data.map(d => classmates.push(d.name));
+        console.log(classmates);
+    })
 })
