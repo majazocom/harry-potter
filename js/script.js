@@ -8,22 +8,28 @@ let spell = '';
 let patronus = '';
 let deatheater = false;
 
-let doMagic = () => {
-    fetch(url + endPoint)
-    .then(response => response.json())
-    .then(data => {
-        dataSet = data;
-    })
-    .catch((error) => {
-        console.error('Error: ', error);
-    });
+let doMagic = async () => {
+
+    let response = await fetch(url + endPoint); // innan responsen sparas i 
+                                                // variabeln ska vi vänta på fetchen
+
+    let localDataSet = await response.json(); // vänta på att vår respons ska göra om till objekt
+
+    return localDataSet; //returnerar det vi gjort härinne i funktionen
+
 }
 
-document.getElementById('sorting-hat-image').addEventListener('click', function() {
-    endPoint = 'sortingHat';
-    doMagic();
+let renderHouse = async () => {
+    console.log(dataSet);
     house = dataSet;
     document.getElementById('house').innerHTML = house;
+}
+
+document.getElementById('sorting-hat-image').addEventListener('click', async function() {
+    endPoint = 'sortingHat';
+    dataSet = await doMagic();   // innan det vi returnerar från funktionen sparas i variabeln 
+                                 // ska vi vänta på att den asynkrona funktionen är HELT färdig
+    await renderHouse();
 })
 
 document.getElementById('spells-image').addEventListener('click', function() {
