@@ -8,7 +8,7 @@ let spell = '';
 let patronus = '';
 let deatheater = false;
 
-let doMagic = async () => {
+let doMagic = async () => { // sagt till JS att funktionen är asynkron
 
     let response = await fetch(url + endPoint); // innan responsen sparas i 
                                                 // variabeln ska vi vänta på fetchen
@@ -20,7 +20,6 @@ let doMagic = async () => {
 }
 
 let renderHouse = async () => {
-    console.log(dataSet);
     house = dataSet;
     document.getElementById('house').innerHTML = house;
 }
@@ -39,5 +38,9 @@ document.getElementById('spells-image').addEventListener('click', function() {
     .then(data => {
         data.map(d => classmates.push(d.name));
         console.log(classmates);
+        classmates.map(classmate => {
+            console.log(classmate);
+            document.getElementById('select-mate').innerHTML += `<option>${classmate}</option>`;
+        })
     })
 })
